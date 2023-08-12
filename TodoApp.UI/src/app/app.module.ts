@@ -44,19 +44,19 @@ export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   protectedResourceMap.set(environment.apiConfig.uri, [
     {
       httpMethod: 'GET',
-      scopes: [...environment.apiConfig.scopes]
+      scopes: [...environment.apiConfig.scopes.read]
     },
-    {
+    /* {
       httpMethod: 'POST',
-      scopes: [...environment.apiConfig.scopes]
-    },
+      scopes: [...environment.apiConfig.scopes.write]
+    }, */
     {
       httpMethod: 'PUT',
-      scopes: [...environment.apiConfig.scopes]
+      scopes: [...environment.apiConfig.scopes.write]
     },
     {
       httpMethod: 'DELETE',
-      scopes: [...environment.apiConfig.scopes]
+      scopes: [...environment.apiConfig.scopes.write]
     }
   ]);
 
@@ -69,9 +69,7 @@ export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
 export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   return { 
     interactionType: InteractionType.Redirect,
-    authRequest: {
-      scopes: [...environment.apiConfig.scopes]
-    },
+    authRequest: environment.loginRequest,
     loginFailedRoute: '/login-failed'
   };
 }
